@@ -1,4 +1,5 @@
 import * as userController from '../controller/userController'
+import * as auth from '../Middleware/auth'
 // import { userModel as users } from '../Model /userModel'
 import Joi from 'joi'
 // import { userSchema as userValidate } from '../Middleware/userValidate'
@@ -23,14 +24,16 @@ router.post('/', async (req, res) => {
   //   res.status(404).send(validateData.error.details[0].message)
   //   return
   // }
-
+ 
   const user = {
-    userName: req.body.userName,
+    username: req.body.username,
     email: req.body.email,
     password: req.body.Password
   }
 
+
   try {
+    console.log(user)
     const adduser = await userController.addUser(user)
     res.status(200).json(adduser)
   } catch (error) {
@@ -52,4 +55,6 @@ router.delete('/:id', async (req, res) => {
     return res.status(404).json({ message: 'user does not exit' })
   }
 })
+
+router.post('/login')
 export default router

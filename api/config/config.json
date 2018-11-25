@@ -4,11 +4,8 @@
     "password": "kirimarvu",
     "database": "admission",
     "host": "localhost",
-    "dialect": "mysql",
-    "operatorsAliases": false
-
+    "dialect": "mysql"
   },
-
   "test": {
     "username": "root",
     "password": null,

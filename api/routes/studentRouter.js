@@ -11,19 +11,20 @@ studentrouter.post('/', async (req, res) => {
   //   res.status(404).send(validateData.error.details[0].message)
   // }
   const newStudent = {
-    id: students.length + 1,
+    userId: req.body.userId,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
-    phoneNumber: req.body.lastName,
+    phoneNumber: req.body.phoneNumber,
     streetName: req.body.streetName,
-    homeNumber: req.body.homeNumber,
     stateOfOrigin: req.body.stateOfOrigin,
     town: req.body.town,
     admittedStatus: 'notAdmitted'
   }
+
   try {
+    console.log(newStudent)
     const addStudent = await studentController.applyForAdmission(newStudent)
-    return res.status(200).json(addStudent)
+    return res.status(200).json({ message: 'thank you for Apllying for Admission' })
   } catch (error) {
     return res.status(404).send(error)
   }

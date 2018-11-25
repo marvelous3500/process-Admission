@@ -6,7 +6,7 @@ export async function addUser (user) {
 }
 
 export async function getUserById (userid) {
-  let user = await User.findAll(
+  let user = await User.findOne(
     {
       where: {
         id: userid
@@ -16,6 +16,18 @@ export async function getUserById (userid) {
   return user
 }
 
+export async function getUserusername (username) {
+  let user = await User.findOne(
+    {
+      where: {
+        username: username
+      },
+      attributes: ['id', 'username', 'email'],
+      raw: true
+    }
+  )
+  return user
+}
 export async function getAllUsers () {
   let users = await User.findAll({ imit: 10 })
   return users
@@ -29,8 +41,10 @@ export async function deleteUser (userid) {
   })
 }
 
-// export async function updateUser () {
-//   let updateUser = User.update({
-
-//   })
-// }
+export async function updateUser () {
+  let updatedUser = await User.update(
+    { title: req.body.title },
+    { returning: true, where: { id: req.params.bookId } }
+  )
+  return updatedUser
+}
