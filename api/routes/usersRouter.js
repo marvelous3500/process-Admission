@@ -9,6 +9,7 @@ var router = express.Router()
 // get userById
 router.get('/:id', async (req, res) => {
   let { id } = req.params
+  console.log("user id :", id)
   try {
     let result = await userController.getUserById(id)
     console.log(`result`, result)
@@ -24,17 +25,18 @@ router.post('/', async (req, res) => {
   //   res.status(404).send(validateData.error.details[0].message)
   //   return
   // }
- 
+
   const user = {
     username: req.body.username,
     email: req.body.email,
-    password: req.body.password
+    password: req.body.password,
+    role: req.body.role
   }
 
   try {
-    console.log(user)
-    const adduser = await userController.addUser(user)
-    res.status(200).json(adduser)
+    const addeduser = await userController.addUser(user)
+    res.status(200)
+    res.json(addeduser)
   } catch (error) {
     return res.status(500).json(error)
   }

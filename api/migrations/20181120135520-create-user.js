@@ -1,6 +1,6 @@
 'use strict'
 module.exports = {
-  up: (queryInterface, Sequelize, DataTypes) => {
+  up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Users', {
       id: {
         allowNull: false,
@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       role: {
-        type: DataTypes.ENUM,
+        type: Sequelize.ENUM,
         values: ['user', 'admin', 'disabled']
 
       },

@@ -1,36 +1,62 @@
 import * as studentService from '../service/studentService'
-// busssine 
+const student = require('../models').Student
+
 export async function applyForAdmission (newStudent) {
-  return studentService.applyForAdmission(newStudent)
+  await student.create(newStudent)
 }
 export async function getAllStudent () {
-  return studentService.getAllstudents()
+  const students = await student.findAll()
+  return students
 }
 
-export async function getStudentById (studentId) {
-  return studentService.getStudentById(studentId)
+export async function getStudentById (id) {
+  let studentObject = await student.findOne(
+    {
+      where: {
+        id: id
+      }
+    }
+  )
+  return studentObject
 }
 
-export async function updateStudent (student) {
-  return studentService.updateStudent(student)
+export async function updateStudent (studentObject, id) {
+  await student.update(studentObject, {
+    where: {
+      id: id
+    }
+  }
+  )
 }
 
-export async function delectStudent (studentId) {
-  return studentService.delectStudent(studentId)
+export async function delectStudent (id) {
+  await student.destroy({
+    where: {
+      id: id
+    }
+  })
 }
 
-export async function grantStudentAdmission (studentId) {
-  return studentService.grantStudentAdmission(studentId)
+export async function admittedStudent () {
+  const students = await student.findAll({
+    where: {
+      admissionstatus: 'admitted'
+    }
+  })
+  return students
 }
 
-export async function withdrawStudentAdmission (studentId) {
-  return studentService.withdrawStudentAdmission(studentId)
+export async function grantStudentAdmission (id) {
+  return studentService.grantStudentAdmission(id)
 }
 
-export async function getAllAdmittedStudent () {
-  return studentService.getAllAdmittedStudent()
+export async function withdrawStudentAdmission (id) {
+  return studentService.withdrawStudentAdmission(id)
 }
 
-export async function getAllWithdrawStudent () {
-  return studentService.getAllWithdrawStudent()
+export async function withdrawStudents () {
+  return studentService.withdrawedStudents()
+}
+export async function apliedStudent () {
+  return studentService.apliedStudents()
 }

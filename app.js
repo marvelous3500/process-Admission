@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.json())
 app.use('/api/login', auth.getToken)
 app.use('/api/user', router)
-app.use('/api/student', studentrouter)
+app.use('/api/student/', studentrouter)
 
 app.get('/', (req, res) => res.send('welocme to Admission Processing App'))
 app.listen(port, () => console.log(` server is runing  on port ${port}!`))

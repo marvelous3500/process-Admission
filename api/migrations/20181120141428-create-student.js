@@ -34,8 +34,8 @@ module.exports = {
         type: Sequelize.STRING
       },
       admittedStatus: {
-        type: Sequelize.STRING
-
+        type: Sequelize.ENUM,
+        values: ['admitted', 'withdraw', 'apply']
       },
       createdAt: {
         allowNull: false,

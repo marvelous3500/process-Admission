@@ -1,49 +1,36 @@
 const student = require('../models').Student
 
-export async function applyForAdmission (newStudent) {
-  await student.create(newStudent)
-}
-export async function getStudentById (studentId) {
-  let studentObject = await student.findOne(
-    {
-      where: {
-        id: studentId
-      }
-    }
-  )
-  return studentObject
-}
-
-export async function getAllstudents () {
-  const students = await student.findAll()
-  return students
-}
-
-export async function deleteSudent (studentId) {
-  await student.destroy({
-    where: {
-      id: studentId
-    }
+export async function grantStudentAdmission (id) {
+  let admitted = 'admitted'
+  await student.find({ where: {
+    id: id
+  } }).then(admissionStatus => {
+    return admissionStatus.updateAttributes(admitted)
   })
 }
 
-export async function updateStudent (studentObj) {
-  await student.update({
+export async function withdrawStudentAdmission (id) {
+  let withdrawStudent = 'withdraw'
+  await student.find({ where: {
+    id: id
+  } }).then(admissionStatus => {
+    return admissionStatus.updateAttributes(withdrawStudent)
   })
 }
 
-export async function grantStudentAdmission (studentId) {
-  const admitted = 'admitted'
-  student.update({ admittedStatus: admitted }, { where: { id: studentId } })
-}
-
-export async function withdrawStudentAdmission (studentId) {
-  const admitted = null
-  student.update({ admittedStatus: admitted }, { where: { id: studentId } })
-}
-
-export async function getAllWithdrawStudent () {
-  student.findAll({
-    admittedStatus: 'admitted'
+export async function withdrawedStudents () {
+  const withdrawStudent = await student.findAll({
+    admittedStatus: 'withdraw'
   })
+  return withdrawStudent
+}
+
+export async function apliedStudents () {
+  console.log('functioon called')
+  
+  // const appliedStudent = await student.findAll({
+  //   where: { admittedStatus: 'apply' }
+  // })
+  // console.log( "apply student:", appliedStudent)
+  // return appliedStudent
 }
