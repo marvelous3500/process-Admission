@@ -1,14 +1,8 @@
 import * as studentController from '../controller/studentController'
-import Joi from 'joi'
-import { studentSchema as studentValidate } from '../Middleware/studentValidate'
 import express from 'express'
-
 var studentrouter = express.Router()
+
 studentrouter.post('/', async (req, res) => {
-  // const validateData = await Joi.validate(req.body, studentValidate)
-  // if (validateData.error) {
-  //   res.status(404).send(validateData.error.details[0].message)
-  // }
   const newStudent = {
     userId: req.body.userId,
     firstName: req.body.firstName,
@@ -17,7 +11,7 @@ studentrouter.post('/', async (req, res) => {
     streetName: req.body.streetName,
     stateOfOrigin: req.body.stateOfOrigin,
     town: req.body.town,
-    admittedStatus: 'apply'
+    admittedStatus: 'admitted'
   }
 
   try {
@@ -33,16 +27,16 @@ studentrouter.get('/', async (req, res, next) => {
   return res.status(200).json(allStudent)
 })
 
-studentrouter.get('/:id', async (req, res) => {
-  let { id } = req.params
-  const getUserById = await studentController.getStudentById(id)
-  return res.status(200).json(getUserById)
-})
+// studentrouter.get('/:id', async (req, res) => {
+//   let { id } = req.params
+//   const getUserById = await studentController.getStudentById(id)
+//   return res.status(200).json(getUserById)
+// })
 
 studentrouter.delete('/:id', async (req, res) => {
   let { id } = req.params
-  const getUserById = await studentController.delectStudent(id)
-  return res.status(200).json(getUserById)
+  await studentController.deleteStudent(id)
+  return res.status(200).json({ message: 'student have been deleted' })
 })
 
 studentrouter.get('/admittedStudent', async (req, res) => {
@@ -55,25 +49,24 @@ studentrouter.get('/admittedStudent', async (req, res) => {
 })
 
 studentrouter.get('/aplied', async (req, res) => {
-  console.log('router methed')
-  // try {
-  //   const aplleidStudent = await studentController.apliedStudent()
-  //   return res.status(200).json(aplleidStudent)
-  // } catch (error) {
-  //   return res.status(404).json(error)
-  // }
+  try {
+    const apllyStudent = await studentController.apliedStudent()
+    return res.status(200).json(apllyStudent)
+  } catch (error) {
+    return res.status(404).json(error)
+  }
 })
 
 studentrouter.get('/withdrawedStudents', async (req, res) => {
   try {
-    const withdrawStudents = await studentController.withdrawStudent()
+    const withdrawStudents = await studentController.withdrawStudents()
     return res.status(200).json(withdrawStudents)
   } catch (error) {
     return res.status(404).json(error)
   }
 })
 
-studentrouter.patch('/grantAmission:studentId', async (req, res) => {
+studentrouter.patch('/grantAmission/:id', async (req, res) => {
   try {
     let { id } = req.params
     await studentController.grantStudentAdmission(id)
@@ -82,7 +75,7 @@ studentrouter.patch('/grantAmission:studentId', async (req, res) => {
     res.status(404).json(error)
   }
 })
-studentrouter.patch('/withdrawAdmission:studentId', async (req, res) => {
+studentrouter.patch('/withdrawAdmission/:id', async (req, res) => {
   try {
     let { id } = req.params
     await studentController.withdrawStudentAdmission(id)

@@ -9,27 +9,22 @@ export async function getAllStudent () {
   return students
 }
 
-export async function getStudentById (id) {
-  let studentObject = await student.findOne(
-    {
-      where: {
-        id: id
-      }
-    }
-  )
-  return studentObject
+// export async function getStudentById (id) {
+//   let studentObject = await student.find(
+//     {
+//       where: {
+//         id: id
+//       }
+//     }
+//   )
+//   return studentObject
+// }
+
+export async function updateStudent (studentObject) {
+  await student.update(studentObject)
 }
 
-export async function updateStudent (studentObject, id) {
-  await student.update(studentObject, {
-    where: {
-      id: id
-    }
-  }
-  )
-}
-
-export async function delectStudent (id) {
+export async function deleteStudent (id) {
   await student.destroy({
     where: {
       id: id
@@ -39,9 +34,7 @@ export async function delectStudent (id) {
 
 export async function admittedStudent () {
   const students = await student.findAll({
-    where: {
-      admissionstatus: 'admitted'
-    }
+    where: { admittedStatus: 'admitted' }
   })
   return students
 }
@@ -57,6 +50,7 @@ export async function withdrawStudentAdmission (id) {
 export async function withdrawStudents () {
   return studentService.withdrawedStudents()
 }
+
 export async function apliedStudent () {
   return studentService.apliedStudents()
 }
