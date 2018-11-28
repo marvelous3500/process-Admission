@@ -4,7 +4,7 @@ export async function applyForAdmission (newStudent) {
   return studentService.applyForAdmission(newStudent)
 }
 export async function getAllStudent () {
-  return studentService.getAllStudent()
+  return studentService.getAllstudents()
 }
 
 export async function getStudentById (studentId) {

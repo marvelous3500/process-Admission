@@ -28,9 +28,8 @@ router.post('/', async (req, res) => {
   const user = {
     username: req.body.username,
     email: req.body.email,
-    password: req.body.Password
+    password: req.body.password
   }
-
 
   try {
     console.log(user)

@@ -16,7 +16,7 @@ export async function getUserById (userid) {
   return user
 }
 
-export async function getUserusername (username) {
+export async function getUserByusername (username) {
   let user = await User.findOne(
     {
       where: {

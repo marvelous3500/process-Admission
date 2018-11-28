@@ -5,9 +5,9 @@ import * as users from '../service/userService'
 export async function getToken (req, res, next) {
   try {
     var username = req.body.username
-    const user = await users.getUserusername(username)
+    const user = await users.getUserByusername(username)
     if (typeof user.username !== 'undefined') {
-      const token = jwt.sign({ user }, 'secretkey', { expiresIn: '1h' })
+      const token = jwt.sign(user, 'secret', { expiresIn: '1h' })
       res.status(200).json({ user: user, token: token })
       next()
     }
