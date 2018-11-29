@@ -1,12 +1,14 @@
 'use strict'
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    userName: DataTypes.STRING,
+    username: DataTypes.STRING,
+    password: DataTypes.STRING,
     email: DataTypes.STRING,
-    password: DataTypes.STRING
+    role: DataTypes.STRING
   }, {})
   User.associate = function (models) {
-    User.hasMany(models.student)
+    // associations can be defined here
+    User.hasOne(models.Student)
   }
   return User
 }

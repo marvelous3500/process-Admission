@@ -1,12 +1,16 @@
 'use strict'
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('students', {
+    return queryInterface.createTable('Students', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
+      },
+      userId: {
+        type: Sequelize.INTEGER
+
       },
       firstName: {
         type: Sequelize.STRING
@@ -21,13 +25,17 @@ module.exports = {
         type: Sequelize.STRING
       },
       phoneNumber: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       stringOfOrigin: {
         type: Sequelize.STRING
       },
       twon: {
         type: Sequelize.STRING
+      },
+      admittedStatus: {
+        type: Sequelize.ENUM,
+        values: ['admitted', 'withdraw', 'apply']
       },
       createdAt: {
         allowNull: false,
@@ -36,15 +44,11 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-      userId: {
-        type: Sequelize.INTEGER
-
       }
 
     })
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('students')
+    return queryInterface.dropTable('Students')
   }
 }

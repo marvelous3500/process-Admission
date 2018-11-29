@@ -1,4 +1,5 @@
 import * as userController from '../controller/userController'
+import * as auth from '../Middleware/auth'
 // import { userModel as users } from '../Model /userModel'
 import Joi from 'joi'
 // import { userSchema as userValidate } from '../Middleware/userValidate'
@@ -8,6 +9,7 @@ var router = express.Router()
 // get userById
 router.get('/:id', async (req, res) => {
   let { id } = req.params
+  console.log("user id :", id)
   try {
     let result = await userController.getUserById(id)
     console.log(`result`, result)
@@ -25,14 +27,16 @@ router.post('/', async (req, res) => {
   // }
 
   const user = {
-    userName: req.body.userName,
+    username: req.body.username,
     email: req.body.email,
-    password: req.body.Password
+    password: req.body.password,
+    role: req.body.role
   }
 
   try {
-    const adduser = await userController.addUser(user)
-    res.status(200).json(adduser)
+    const addeduser = await userController.addUser(user)
+    res.status(200)
+    res.json(addeduser)
   } catch (error) {
     return res.status(500).json(error)
   }
@@ -52,4 +56,6 @@ router.delete('/:id', async (req, res) => {
     return res.status(404).json({ message: 'user does not exit' })
   }
 })
+
+router.post('/login')
 export default router
